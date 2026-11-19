@@ -1,5 +1,1 @@
-[
-  { "file": "1-checklist.jpg", "path": "/", "viewport": { "width": 1280, "height": 800 } },
-  { "file": "2-silver.jpg", "path": "/", "grade": "silver", "viewport": { "width": 1280, "height": 800 } },
-  { "file": "3-bronze.jpg", "path": "/", "grade": "bronze", "scroll": 1400, "viewport": { "width": 1280, "height": 800 } }
-]
+[{"file":"1-checklist.jpg","note":"Cover: checklist with the Positive Mental Attitude guide open beside it, 13 of 55 earned, filters and spoiler guard visible","path":"/","viewport":{"height":800,"width":1280}},{"file":"2-roadmap.jpg","note":"Roadmap to the platinum, stages 1 to 3 visible","path":"/","view":"roadmap","viewport":{"height":800,"width":1280}},{"file":"3-missables.jpg","note":"Missables page: the one missable trophy flagged with its warning","path":"/","view":"missables","viewport":{"height":800,"width":1280}},{"file":"4-spoilers.jpg","kind":"story","note":"Spoiler guard off with the story filter: hidden names stand revealed","path":"/","spoiler":"off","view":"checklist","viewport":{"height":800,"width":1280}}]

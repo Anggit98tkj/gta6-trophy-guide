@@ -3,23 +3,94 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI trophy checklist</title>
+<title>Leonida Trophy Guide — GTA VI platinum tracker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ff7a59'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%23fff'%3E%E2%98%85%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>GTA VI trophy checklist</h1>
-  <p id="progress">0 of 55 earned</p>
+<noscript><p class="noscript">This guide needs JavaScript to load its trophy list and save your progress. The list itself lives in app/data/trophies.json.</p></noscript>
+<header class="top">
+  <div class="brand">
+    <p class="eyebrow">Grand Theft Auto VI &middot; PlayStation 5 &middot; offline guide</p>
+    <h1>Leonida Trophy Guide</h1>
+    <p class="tagline">All 55 trophies, their official names and grades, a guide for each with its sources, and a roadmap to the platinum. No account, no network, no spoilers until you ask for them.</p>
+  </div>
+  <div class="progress-card" id="progressCard">
+    <p class="big-number"><span id="earnedCount">0</span><span class="of"> / 55</span></p>
+    <p class="progress-label" id="progressLabel">0 trophies earned &middot; platinum 0% there</p>
+    <div class="bar" role="progressbar" aria-label="Trophies earned" aria-valuemin="0" aria-valuemax="55" aria-valuenow="0" id="progressBar"><span id="progressFill"></span></div>
+    <p class="grade-line" id="gradeLine">Platinum 0/1 &middot; Gold 0/2 &middot; Silver 0/6 &middot; Bronze 0/46</p>
+  </div>
 </header>
-<div class="controls">
-  <label>Grade <select id="grade"><option value="all">All</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
-  <button id="export" type="button">Export progress</button>
-  <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
-</div>
-<table>
-  <thead><tr><th>Earned</th><th>Trophy</th><th>Grade</th><th>How to get it</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table>
+
+<nav class="tabs" aria-label="Guide sections">
+  <button type="button" class="tab active" data-view="checklist" id="tabChecklist">Checklist</button>
+  <button type="button" class="tab" data-view="roadmap" id="tabRoadmap">Roadmap to the platinum</button>
+  <button type="button" class="tab" data-view="missables" id="tabMissables">Missables <span class="pill" id="missablePill">1</span></button>
+</nav>
+
+<section class="toolbar" id="toolbar">
+  <label class="search">Search <input id="search" type="search" placeholder="Trophy, mission or place&hellip;" autocomplete="off"></label>
+  <label>Kind
+    <select id="kindFilter">
+      <option value="all">All kinds</option>
+      <option value="story">Story</option>
+      <option value="missable">Missable</option>
+      <option value="collectibles">Collectibles</option>
+      <option value="activities">Activities</option>
+    </select>
+  </label>
+  <label>Grade
+    <select id="gradeFilter">
+      <option value="all">All grades</option>
+      <option value="platinum">Platinum</option>
+      <option value="gold">Gold</option>
+      <option value="silver">Silver</option>
+      <option value="bronze">Bronze</option>
+    </select>
+  </label>
+  <label class="check"><input type="checkbox" id="earnedOnly"> Earned only</label>
+  <label class="check spoiler-check"><input type="checkbox" id="spoilerMode" checked> Hide story spoilers</label>
+  <span class="spacer"></span>
+  <button type="button" id="exportBtn">Export progress</button>
+  <label class="import-btn">Import progress <input id="importFile" type="file" accept="application/json,.json"></label>
+  <button type="button" id="resetBtn">Reset</button>
+</section>
+<p class="spoiler-note" id="spoilerNote">Spoiler guard is on: hidden and story trophies stay veiled until you earn them. Turn it off to see every name.</p>
+
+<main class="layout">
+  <section class="list-col" aria-label="Trophy checklist">
+    <p class="list-meta" id="listMeta"></p>
+    <ul class="trophy-list" id="trophyList"></ul>
+    <p class="empty" id="emptyState" hidden>No trophies match these filters. Clear the search or pick another kind.</p>
+  </section>
+  <aside class="detail-col" aria-label="Trophy guide">
+    <div class="detail" id="detailPane">
+      <p class="detail-hint">Pick a trophy on the left to read its guide and sources here.</p>
+    </div>
+  </aside>
+</main>
+
+<section class="page" id="roadmapPage" hidden>
+  <h2>Roadmap to the platinum</h2>
+  <p class="page-intro">Five stages, in order. The story first, then the stranger strands, then the activities, then the collectibles and the money, and the platinum last. Counts come from the official descriptions and the trackers listed beside each trophy.</p>
+  <ol class="roadmap" id="roadmapList"></ol>
+  <h3>Stage contents</h3>
+  <div class="stage-grid" id="stageGrid"></div>
+</section>
+
+<section class="page" id="missablesPage" hidden>
+  <h2>Missable trophies</h2>
+  <p class="page-intro">Only one trophy on this list can be missed, according to PowerPyx as reported by GTA Zone and Keengamer. Everything else can be earned after the story, but the guides still report no mission replay, so keep manual saves.</p>
+  <div class="missable-list" id="missableList"></div>
+  <h3>Why only one?</h3>
+  <p class="page-text">The other 54 trophies are story progress, open-world activities, collectibles or money, all of which stay available after the credits. The single exception is a meditation spot offered in Chapter 1 that becomes unavailable when the chapter ends. Meditate there the first time it is offered and the risk is gone.</p>
+</section>
+
+<footer class="foot">
+  <p>Names, descriptions and grades as PlayStation publishes them, verified against Exophase. Guides are written for this entry in its own words and cite their sources beside each trophy. No Rockstar logo or artwork is used. Progress lives only in your browser (localStorage) unless you export it.</p>
+  <p>Sources: Exophase &middot; PSNProfiles-linked reporting &middot; PowerPyx via GTA Zone &middot; Keengamer &middot; Output Lag</p>
+</footer>
 <script type="module" src="app.js"></script>
 </body>
 </html>
